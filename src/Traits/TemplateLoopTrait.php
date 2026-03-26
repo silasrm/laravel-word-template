@@ -40,7 +40,28 @@ trait TemplateLoopTrait
         return $this;
     }
 
-    
+    /**
+     * @param string $key
+     * @param array $rows
+     * @return \Novay\Word\Services\TemplateService|\Novay\Word\Traits\TemplateLoopTrait
+     */
+    public function setBlock(string $key, array $rows): self
+    {
+        if (! $this->template) {
+            throw new \RuntimeException('Template not loaded. Call template() first.');
+        }
+
+        $count = count($rows);
+        if ($count === 0) {
+            // if no rows, try to remove remaining placeholders by setting empty
+            $this->template->cloneBlock($key, 0);
+            return $this;
+        }
+
+        $this->template->cloneBlock($key, count($rows), true, false, $rows);
+
+        return $this;
+    }
 
     /**
      * Flatten nested arrays into dot notation keys.
