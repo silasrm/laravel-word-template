@@ -101,4 +101,12 @@ class TemplateService implements Exportable
 
         return $name . '.' . $ext;
     }
+
+    /**
+     * @return \PhpOffice\PhpWord\TemplateProcessor
+     */
+    public function getTemplate()
+    {
+        return $this->template;
+    }
 }
